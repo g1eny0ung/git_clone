@@ -7,7 +7,7 @@ typedef Callback = void Function(ProcessResult);
 /// The [options] is synonymous with `git clone` options.
 /// If an option has no value, it's needed to pass `true` as a placeholder.
 ///
-/// Pass [callback] function to receive the clone [ProcessResult].
+/// The [callback] is a [Callback] function which receives clone [ProcessResult] as the argument.
 void gitClone(
     {required String repo,
     String? directory,
@@ -19,8 +19,10 @@ void gitClone(
     options.forEach((key, value) {
       args.add(key);
 
-      if (value is! bool && value) {
+      if (value is! bool) {
         args.add(value);
+      } else if (!value) {
+        args.removeLast();
       }
     });
   }
@@ -31,7 +33,9 @@ void gitClone(
     '--',
     repo,
     if (directory != null) directory
-  ]).then((result) => {
-        if (callback != null) {callback(result)}
-      });
+  ]).then((result) {
+    if (callback != null) {
+      callback(result);
+    }
+  });
 }
