@@ -2,6 +2,26 @@ import 'dart:io';
 
 typedef Callback = Future<void> Function(ProcessResult);
 
+/// Supported platforms
+enum Platform { github, gitlab, bitbucket }
+
+/// Clone a git repository from different [Platform] and [nameAndRepo].
+///
+/// ```dart
+/// fastClone(
+///   platform: Platform.github,
+///   nameAndRepo: 'g1eny0ung/git_clone',
+/// )
+/// ```
+void fastClone(
+    {required Platform platform,
+    required String nameAndRepo,
+    String? directory,
+    Map<String, dynamic>? options,
+    Callback? callback}) {
+  // Need to implement fastClone
+}
+
 /// Clone a git repository by [repo] and target [directory].
 ///
 /// The [options] is synonymous with `git clone` options.
