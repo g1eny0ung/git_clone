@@ -3,7 +3,7 @@ import 'package:git_clone/git_clone.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Run gitClone with different parameters', () {
+  group('Runs gitClone with different parameters:', () {
     tearDownAll(() {
       Process.run('rm', [
         '-rf',
@@ -14,58 +14,58 @@ void main() {
       ]);
     });
 
-    test('Only repo', () {
-      gitClone(
+    test('only repo', () async {
+      await gitClone(
         repo: 'https://github.com/g1eny0ung/git_clone.git',
         callback: (_) async {
           final destination = Directory('git_clone');
           final isThere = await destination.exists();
 
-          expect(isThere, true);
+          expect(isThere, isTrue);
         },
       );
     });
 
-    test('Repo and target directory', () async {
-      gitClone(
+    test('repo and target directory', () async {
+      await gitClone(
         repo: 'https://github.com/g1eny0ung/git_clone.git',
         directory: 'git-clone',
         callback: (_) async {
           final destination = Directory('git-clone');
           final isThere = await destination.exists();
 
-          expect(isThere, true);
+          expect(isThere, isTrue);
         },
       );
     });
 
-    test('With bare option', () async {
-      gitClone(
+    test('with --bare', () async {
+      await gitClone(
         repo: 'https://github.com/g1eny0ung/git_clone.git',
         options: {
           '--bare': true,
         },
         callback: (_) async {
-          final destination = Directory('git-clone');
-          final isThere = await destination.exists();
+          final head = File('git_clone.git/HEAD');
+          final isThere = await head.exists();
 
-          expect(isThere, true);
+          expect(isThere, isTrue);
         },
       );
     });
 
-    test('False option', () async {
-      gitClone(
+    test('with --bare false', () async {
+      await gitClone(
         repo: 'https://github.com/g1eny0ung/git_clone.git',
         directory: 'git-clone-bare-false',
         options: {
           '--bare': false,
         },
         callback: (_) async {
-          final destination = File('git-clone-bare-false/config');
-          final isThere = await destination.exists();
+          final head = File('git-clone-bare-false/head');
+          final isThere = await head.exists();
 
-          expect(isThere, false);
+          expect(isThere, isFalse);
         },
       );
     });

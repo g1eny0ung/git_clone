@@ -1,6 +1,6 @@
 import 'dart:io';
 
-typedef Callback = void Function(ProcessResult);
+typedef Callback = Future<void> Function(ProcessResult);
 
 /// Clone a git repository by [repo] and target [directory].
 ///
@@ -8,11 +8,23 @@ typedef Callback = void Function(ProcessResult);
 /// If an option has no value, it's needed to pass `true` as a placeholder.
 ///
 /// The [callback] is a [Callback] function which receives clone [ProcessResult] as the argument.
-void gitClone(
+///
+/// ```dart
+/// gitClone(
+///   repo: 'https://github.com/g1eny0ung/git_clone.git',
+///   callback: (_) async {
+///     final destination = Directory('git_clone');
+///     final isThere = await destination.exists();
+///
+///     print(isThere ? 'Cloned' : 'Failed to clone');
+///   },
+/// );
+/// ```
+Future<void> gitClone(
     {required String repo,
     String? directory,
     Map<String, dynamic>? options,
-    Callback? callback}) {
+    Callback? callback}) async {
   final args = [];
 
   if (options != null) {
@@ -22,20 +34,16 @@ void gitClone(
       if (value is! bool) {
         args.add(value);
       } else if (!value) {
+        // Removes false arg from args.
         args.removeLast();
       }
     });
   }
 
-  Process.run('git', [
-    'clone',
-    ...args,
-    '--',
-    repo,
-    if (directory != null) directory
-  ]).then((result) {
-    if (callback != null) {
-      callback(result);
-    }
-  });
+  final result = await Process.run(
+      'git', ['clone', ...args, '--', repo, if (directory != null) directory]);
+
+  if (callback != null) {
+    await callback(result);
+  }
 }
