@@ -3,7 +3,9 @@ import 'utils.dart';
 
 typedef Callback = Future<void> Function(ProcessResult);
 
-/// Clone a git repository from different [Platform] and [ownerAndRepo].
+/// Clone a git repository from different [Platform] and [ownerAndRepo] by calling [gitClone].
+///
+/// You can also change the [protocol] to other supported protocols. Default is `https`.
 ///
 /// Example:
 ///
@@ -13,13 +15,18 @@ typedef Callback = Future<void> Function(ProcessResult);
 ///   ownerAndRepo: 'g1eny0ung/git_clone',
 /// )
 /// ```
-void fastClone(
+Future<void> fastClone(
     {required Platform platform,
     required String ownerAndRepo,
+    Protocol protocol = Protocol.https,
     String? directory,
     Map<String, dynamic>? options,
     Callback? callback}) {
-  // Need to implement fastClone
+  return gitClone(
+      repo: platform.parseUri(ownerAndRepo, protocol),
+      directory: directory,
+      options: options,
+      callback: callback);
 }
 
 /// Clone a git repository by [repo] and target [directory].
