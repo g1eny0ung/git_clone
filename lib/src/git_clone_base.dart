@@ -1,21 +1,21 @@
 import 'dart:io';
+import 'utils.dart';
 
 typedef Callback = Future<void> Function(ProcessResult);
 
-/// Supported platforms
-enum Platform { github, gitlab, bitbucket }
-
-/// Clone a git repository from different [Platform] and [nameAndRepo].
+/// Clone a git repository from different [Platform] and [ownerAndRepo].
+///
+/// Example:
 ///
 /// ```dart
 /// fastClone(
 ///   platform: Platform.github,
-///   nameAndRepo: 'g1eny0ung/git_clone',
+///   ownerAndRepo: 'g1eny0ung/git_clone',
 /// )
 /// ```
 void fastClone(
     {required Platform platform,
-    required String nameAndRepo,
+    required String ownerAndRepo,
     String? directory,
     Map<String, dynamic>? options,
     Callback? callback}) {
@@ -28,6 +28,8 @@ void fastClone(
 /// If an option has no value, it's needed to pass `true` as a placeholder.
 ///
 /// The [callback] is a [Callback] function which receives clone [ProcessResult] as the argument.
+///
+/// Example:
 ///
 /// ```dart
 /// gitClone(
