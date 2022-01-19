@@ -3,9 +3,9 @@ import 'utils.dart';
 
 typedef Callback = Future<void> Function(ProcessResult);
 
-/// Clone a git repository from different [Platform] and [ownerAndRepo] by calling [gitClone].
+/// Clone a git repository from [Platform] and [ownerAndRepo] by calling [gitClone].
 ///
-/// You can also change the [protocol] to other supported protocols. Default is `https`.
+/// You can also change the [protocol] to other supported [Protocol]s. Default is [Protocol.https].
 ///
 /// Example:
 ///
