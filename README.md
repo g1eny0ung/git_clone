@@ -1,10 +1,10 @@
 # git_clone
 
-Clone a git repository.
+A library for cloning a git repository.
 
 ## How to use
 
-Check out <https://pub.dev/documentation/git_clone/latest/git_clone/gitClone.html>.
+Check out <https://pub.dev/documentation/git_clone/latest/git_clone/git_clone-library.html>.
 
 ## License
 
