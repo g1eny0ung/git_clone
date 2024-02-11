@@ -15,20 +15,18 @@ typedef Callback = Future<void> Function(ProcessResult);
 ///   ownerAndRepo: 'g1eny0ung/git_clone',
 /// )
 /// ```
-Future<void> fastClone({
-  required Platform platform,
-  required String ownerAndRepo,
-  Protocol protocol = Protocol.https,
-  String? directory,
-  Map<String, dynamic>? options,
-  Callback? callback,
-}) {
+Future<void> fastClone(
+    {required Platform platform,
+    required String ownerAndRepo,
+    Protocol protocol = Protocol.https,
+    String? directory,
+    Map<String, dynamic>? options,
+    Callback? callback}) {
   return gitClone(
-    repo: platform.parseUri(ownerAndRepo, protocol),
-    directory: directory,
-    options: options,
-    callback: callback,
-  );
+      repo: platform.parseUri(ownerAndRepo, protocol),
+      directory: directory,
+      options: options,
+      callback: callback);
 }
 
 /// Clone a git repository by [repo] and target [directory].
@@ -51,12 +49,11 @@ Future<void> fastClone({
 ///   },
 /// );
 /// ```
-Future<void> gitClone({
-  required String repo,
-  String? directory,
-  Map<String, dynamic>? options,
-  Callback? callback,
-}) async {
+Future<void> gitClone(
+    {required String repo,
+    String? directory,
+    Map<String, dynamic>? options,
+    Callback? callback}) async {
   final args = [];
 
   if (options != null) {
@@ -73,9 +70,7 @@ Future<void> gitClone({
   }
 
   final result = await Process.run(
-    'git',
-    ['clone', ...args, repo, if (directory != null) directory],
-  );
+      'git', ['clone', ...args, '--', repo, if (directory != null) directory]);
 
   if (callback != null) {
     await callback(result);
