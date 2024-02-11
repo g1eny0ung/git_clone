@@ -17,7 +17,7 @@ void main() {
       await gitClone(
         repo: repo,
         callback: (_) async {
-          final destination = Directory('blank');
+          final destination = Directory('./blank');
           final isThere = await destination.exists();
 
           expect(isThere, isTrue);
