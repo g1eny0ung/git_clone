@@ -4,15 +4,16 @@ import 'dart:io';
 
 void main() {
   tearDown(() {
-    Process.run('rm', ['-rf', 'blank']);
+    Process.run('rm', ['-rf', 'blank-from-bitbucket']);
   });
 
   test('fastClone clones g1eny0ung/blank on Bitbucket', () async {
     await fastClone(
         platform: Platform.bitbucket,
         ownerAndRepo: 'g1eny0ung/blank',
+        directory: 'blank-from-bitbucket',
         callback: (_) async {
-          final destination = Directory('blank');
+          final destination = Directory('blank-from-bitbucket');
           final isThere = await destination.exists();
 
           expect(isThere, isTrue);
