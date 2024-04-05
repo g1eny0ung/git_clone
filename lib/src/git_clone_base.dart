@@ -94,7 +94,7 @@ Future<void> gitClone({
 /// ```dart
 /// gitCloneArchive(
 ///   url: 'https://github.com/g1eny0ung/git_clone/archive/refs/heads/master.zip',
-///   directory: 'git_clone-master.zip',
+///   destination: 'git_clone-master.zip',
 /// );
 /// ```
 Future<void> gitCloneArchive({
