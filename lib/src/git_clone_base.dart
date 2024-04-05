@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'utils.dart';
 
 typedef Callback = Future<void> Function(ProcessResult);
@@ -80,4 +81,36 @@ Future<void> gitClone({
   if (callback != null) {
     await callback(result);
   }
+}
+
+/// Download a git repository archive from [url] and save it to [destination].
+///
+/// Use this function if you haven't installed `git` on your system.
+///
+/// Note: this function will not extract the archive.
+///
+/// Example:
+///
+/// ```dart
+/// gitCloneArchive(
+///   url: 'https://github.com/g1eny0ung/git_clone/archive/refs/heads/master.zip',
+///   directory: 'git_clone-master.zip',
+/// );
+/// ```
+Future<void> gitCloneArchive({
+  required String url,
+  required String destination,
+}) {
+  return _downloadFile(url, destination);
+}
+
+Future<void> _downloadFile(String url, String savePath) async {
+  final response = await http.get(Uri.parse(url));
+
+  if (response.statusCode != 200) {
+    throw GitRepoRetrievalException(url: url, response: response);
+  }
+
+  final file = File(savePath);
+  await file.writeAsBytes(response.bodyBytes);
 }

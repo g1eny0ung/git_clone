@@ -9,14 +9,14 @@ void main() {
 
   test('fastClone clones g1eny0ung/blank on Bitbucket', () async {
     await fastClone(
-        platform: Platform.bitbucket,
-        ownerAndRepo: 'g1eny0ung/blank',
-        directory: 'blank-from-bitbucket',
-        callback: (_) async {
-          final destination = Directory('blank-from-bitbucket');
-          final isThere = await destination.exists();
+      platform: Platform.bitbucket,
+      ownerAndRepo: 'g1eny0ung/blank',
+      directory: 'blank-from-bitbucket',
+    );
 
-          expect(isThere, isTrue);
-        });
+    final destination = Directory('blank-from-bitbucket');
+    final isThere = await destination.exists();
+
+    expect(isThere, isTrue);
   });
 }

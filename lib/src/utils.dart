@@ -1,3 +1,5 @@
+import 'package:http/http.dart' show Response;
+
 /// Supported protocols
 enum Protocol { https, git }
 
@@ -33,4 +35,11 @@ extension PlatformParsing on Platform {
         throw ArgumentError('Unsupported protocol: $protocol');
     }
   }
+}
+
+class GitRepoRetrievalException implements Exception {
+  final String url;
+  final Response response;
+
+  GitRepoRetrievalException({required this.url, required this.response});
 }
